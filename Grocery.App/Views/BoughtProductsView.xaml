@@ -15,35 +15,55 @@
             <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Picker Grid.Column="0" Grid.Row="0" Margin="10,0,0,0" Title="Klik op onderstaand pijltje om een product te selecteren:"
+        <Picker Grid.Column="0" Grid.Row="0" Margin="10,0,0,0" 
+        Title="Klik op onderstaand pijltje om een product te selecteren:"
         ItemsSource="{Binding Products}"
+        ItemDisplayBinding="{Binding Name}"
         SelectedItem="{Binding SelectedProduct, Mode=TwoWay}" 
         SelectedIndexChanged="Picker_SelectedIndexChanged"
         BackgroundColor="{StaticResource Primary}"
-            TextColor="{StaticResource Secondary}">
+        TextColor="{StaticResource Secondary}">
         </Picker>
         <Border Grid.Row="1" Grid.Column="0" Stroke="#C49B33" StrokeThickness="4" Padding="5" Margin="5" HorizontalOptions="Center">
-            <CollectionView ItemsSource="{Binding BoughtProductsList}" Margin="5" HorizontalOptions="End" SelectionMode="Single">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="m:BoughtProducts" >
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <!-- Toon hier de naam van de Client naam van de boodschappenlijst -->
-                        </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-                <CollectionView.EmptyView>
-                    <ContentView>
-                        <Label Text="Er zijn geen verkochte producten" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                    </ContentView>
-                </CollectionView.EmptyView>
-            </CollectionView>
+            <StackLayout>
+                <!-- Header -->
+                <Grid Padding="10,5" BackgroundColor="#C49B33">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="Klant" FontAttributes="Bold" TextColor="White"/>
+                    <Label Grid.Column="1" Text="Boodschappenlijst" FontAttributes="Bold" TextColor="White"/>
+                    <Label Grid.Column="2" Text="Aantal" FontAttributes="Bold" TextColor="White" HorizontalOptions="End"/>
+                </Grid>
+
+                <!-- Data -->
+                <CollectionView ItemsSource="{Binding BoughtProductsList}" Margin="5" HorizontalOptions="End" SelectionMode="Single">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="m:BoughtProducts">
+                            <Grid Padding="10,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding Client.Name}" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding GroceryList.Name}" VerticalOptions="Center"/>
+                                <Label Grid.Column="2" Text="{Binding Amount}" VerticalOptions="Center" HorizontalOptions="End" FontAttributes="Bold"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.EmptyView>
+                        <ContentView>
+                            <Label Text="Geen klanten hebben dit product gekocht" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" Padding="20"/>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                </CollectionView>
+            </StackLayout>
         </Border>
     </Grid>
 </ContentPage>
