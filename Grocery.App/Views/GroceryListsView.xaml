@@ -7,7 +7,7 @@
              x:DataType="vm:GroceryListViewModel"
              Title="GroceryListsView">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Admin" 
+        <ToolbarItem Text="{Binding ClientName}" 
                  Command="{Binding ShowBoughtProductsCommand}" />
     </ContentPage.ToolbarItems>
     <Shell.TitleView>
